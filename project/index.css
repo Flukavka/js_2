@@ -11,7 +11,6 @@ body {
 
 header {
   margin-bottom: 40px;
-  padding: 20px;
   background-color: slategray;
 }
 
@@ -31,16 +30,31 @@ header .cart-button {
   padding: 12px 24px;
   background-color: #FFFFFF;
   border: none;
+  margin: 20px 0;
+}
+
+@media (max-width: 1599.9px) {
+  header .cart-button {
+    margin: 20px 40px;
+  }
 }
 
 .goods-list {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+}
+
+@media (max-width: 1599.9px) {
+  .goods-list {
+    margin-left: 40px;
+    margin-right: 40px;
+  }
 }
 
 .goods-item {

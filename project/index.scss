@@ -11,7 +11,6 @@ body {
 
 header {
     margin-bottom: 40px;
-    padding: 20px;
     background-color: slategray;
 
     .header_nav {
@@ -24,13 +23,23 @@ header {
         padding: 12px 24px;
         background-color: #FFFFFF;
         border: none;
+        margin: 20px 0;
+
+        @media (max-width: 1599.9px) {
+            margin: 20px 40px;
+        }
     }
 }
 
 .goods-list {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     flex-wrap: wrap;
+
+    @media (max-width: 1599.9px) {
+        margin-left: 40px;
+        margin-right: 40px;
+    }
 }
 
 .goods-item {
