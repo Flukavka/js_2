@@ -1,25 +1,19 @@
-const goods = [
-  { title: 'Shirt', price: 150 },
-  { title: 'Socks', price: 50 },
-  { title: 'Jacket', price: 350 },
-  { title: 'Shoes', price: 250 },
-];
+'use strict'
 
 const BASA_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
 const GET_GOODS_ITEMS_URL = `${BASA_URL}/catalogData.json`;
 const GET_BASKET_URL = `${BASA_URL}/getBasket.json`;
 
-function service(url, callback) {
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', url)
-  const loadHandler = () => {
-    callback(JSON.parse(xhr.response));
-  }
-  xhr.onload = loadHandler;
-
-  xhr.send();
+function service(url) {
+  return new Promise((resolve) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', url)
+    xhr.send();
+    xhr.onload = () => {
+      resolve(JSON.parse(xhr.response))
+    }
+  })
 }
-
 
 class GoodsItem {
   constructor({ product_name = 'Default', price = 0 }) {
@@ -39,40 +33,56 @@ class GoodsItem {
 
 class GoodsList {
   list = [];
-  fetchData(callback) {
-    service(GET_GOODS_ITEMS_URL, (data) => {
+  filteredItems = [];
+  fetchData() {
+    const prom = service(GET_GOODS_ITEMS_URL).then((data) => {
       this.list = data;
-      callback();
+      this.filteredItems = data;
     });
+    return prom;
+  }
+
+  filterItems(value) {
+    this.filteredItems = this.list.filter(({ product_name }) => {
+      return (new RegExp(value, 'gui')).test(product_name);
+    })
   }
 
   render() {
-    const goodsList = this.list.map(item => {
+    const goodsList = this.filteredItems.map(item => {
       const goodsItem = new GoodsItem(item);
       return goodsItem.render()
     }).join('');
     document.querySelector('.goods-list').innerHTML = goodsList;
   }
-
-  getTotalPrice() {
-    return goods.reduce((total, goods) => total + goods.price, 0);
-  }
 }
 
 class BasketGoods {
   list = [];
-  fetchData(callback = () => { }) {
+  fetchData() {
     service(GET_BASKET_URL, (data) => {
       this.list = data;
-      callback();
-    })
-  };
+    });
+  }
 }
 
-const goodsList = new GoodsList(goods);
-goodsList.fetchData(() => {
+const goodsList = new GoodsList();
+goodsList.fetchData().then(() => {
   goodsList.render();
 });
 
 const basketGoods = new BasketGoods();
 basketGoods.fetchData();
+
+
+
+const input = document.querySelector('.search_text');
+document.querySelector('.search_button').addEventListener('click', () => {
+  goodsList.filterItems(input.value);
+  goodsList.render();
+});
+
+input.addEventListener('keydown', () => {
+  goodsList.filterItems(input.value);
+  goodsList.render();
+});
