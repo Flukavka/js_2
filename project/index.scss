@@ -1,0 +1,211 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.container {
+    @media (min-width: 1600px) {
+        margin: 0 auto;
+        width: 1140px;
+    }
+}
+
+header {
+    margin-bottom: 40px;
+    background-color: white;
+    box-shadow: 0px 1px 4px rgba(26, 27, 24, 0.10);
+
+    .search {
+        display: flex;
+        align-items: center;
+
+        &_text {
+            height: 46px;
+            border: none;
+            width: 200px;
+            padding: 12px 12px;
+            box-sizing: border-box;
+            border-radius: 0;
+            box-shadow: inset 1px -1px 10px rgba(0, 0, 0, 0.05);
+
+            ::placeholder {
+                color: slategray;
+                opacity: 0.8;
+            }
+        }
+
+        &_text:focus {
+            border-color: #bdbdbd;
+            outline: 0;
+        }
+
+        &_button {
+            padding: 12px 24px;
+            background-color: white;
+            border: none;
+            color: rebeccapurple;
+            margin: 20px 0;
+            font-family: inherit;
+            font-weight: 600;
+        }
+    }
+
+    .header_nav {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    .cart-button {
+        padding: 12px 24px;
+        background-color: rebeccapurple;
+        border: none;
+        margin: 20px 0 20px 40px;
+        color: white;
+        font-family: inherit;
+
+        @media (max-width: 1599.9px) {
+            margin: 20px 40px;
+        }
+    }
+
+    .basket_hidden {
+        display: none;
+    }
+
+    .hidden {
+        padding: 24px 24px;
+        box-shadow: 0px 1px 4px rgba(26, 27, 24, 0.20);
+    }
+
+    .basket {
+        position: absolute;
+        top: 32px;
+        display: flex;
+        flex-direction: column;
+        background: white;
+
+        &_headerBlock {
+            display: flex;
+            flex-direction: column;
+
+            &__main {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 8px;
+                font-weight: 600;
+            }
+
+            &__goods {
+                display: flex;
+                margin-bottom: 8px;
+                font-weight: 600;
+
+                :not(:last-child) {
+                    margin-right: 16px;
+                }
+
+                :last-child {
+                    margin-right: 40px;
+                }
+
+                &Name {
+                    width: 148px;
+                }
+
+                &Price {
+                    width: 88px;
+                    margin-right: 8px;
+                }
+            }
+        }
+
+        &_userBlock {
+            display: flex;
+            margin-bottom: 8px;
+            margin-top: 8px;
+
+            &__productName {
+                margin-right: 16px;
+                width: 148px;
+            }
+
+            &__productPrice {
+                width: 74px;
+                margin-right: 16px;
+            }
+
+            &__productCount {
+                >input {
+                    width: 12px;
+                }
+
+                margin-right: 44px;
+            }
+
+            &__deleteBtn {
+                border: none;
+                background: none;
+                color: rebeccapurple;
+            }
+        }
+
+        &_totalBlock {
+            display: flex;
+            margin-top: 16px;
+
+            &__headding {
+                margin-right: 16px;
+                width: 148px;
+            }
+
+            &__price {
+                width: 74px;
+                margin-right: 16px;
+            }
+        }
+
+        &_orderBtn {
+            margin-top: 16px;
+            padding: 12px 26px;
+            background: rebeccapurple;
+            border: none;
+            color: white;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+    }
+}
+
+.goods-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    @media (max-width: 1599.9px) {
+        margin-left: 40px;
+        margin-right: 40px;
+    }
+}
+
+/* .plug {
+    background: none;
+} */
+
+.goods-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 200px;
+    margin-bottom: 30px;
+    background-color: white;
+    box-shadow: 0px 1px 4px rgba(26, 27, 24, 0.10);
+    margin-right: 40px;
+    margin-left: 40px;
+
+    &Img {
+        height: 120px;
+        width: 80%;
+        background-color: rebeccapurple;
+    }
+}
