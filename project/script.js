@@ -4,85 +4,70 @@ const BASA_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-st
 const GET_GOODS_ITEMS_URL = `${BASA_URL}/catalogData.json`;
 const GET_BASKET_URL = `${BASA_URL}/getBasket.json`;
 
-function service(url) {
-  return new Promise((resolve) => {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', url)
-    xhr.send();
-    xhr.onload = () => {
-      resolve(JSON.parse(xhr.response))
-    }
-  })
-}
-
-class GoodsItem {
-  constructor({ product_name = 'Default', price = 0 }) {
-    this.product_name = product_name;
-    this.price = price;
-  }
-  render() {
-    return `
-    <div class="goods-item">
-      <h3>${this.product_name}</h3>
-      <div class="goods-itemImg"></div>
-      <p>${this.price}</p>
-    </div>
-  `
-  }
-}
-
-class GoodsList {
-  list = [];
-  filteredItems = [];
-  fetchData() {
-    const prom = service(GET_GOODS_ITEMS_URL).then((data) => {
-      this.list = data;
-      this.filteredItems = data;
-    });
-    return prom;
-  }
-
-  filterItems(value) {
-    this.filteredItems = this.list.filter(({ product_name }) => {
-      return (new RegExp(value, 'gui')).test(product_name);
-    })
-  }
-
-  render() {
-    const goodsList = this.filteredItems.map(item => {
-      const goodsItem = new GoodsItem(item);
-      return goodsItem.render()
-    }).join('');
-    document.querySelector('.goods-list').innerHTML = goodsList;
-  }
+async function service(url) {
+  return fetch(url).then((res) => res.json());
 }
 
 class BasketGoods {
-  list = [];
+  items = [];
   fetchData() {
     service(GET_BASKET_URL, (data) => {
-      this.list = data;
+      this.items = data;
     });
   }
 }
 
-const goodsList = new GoodsList();
-goodsList.fetchData().then(() => {
-  goodsList.render();
-});
 
-const basketGoods = new BasketGoods();
-basketGoods.fetchData();
+window.onload = () => {
+  const root = new Vue({
+    el: '#root',
+    data: {
+      items: [],
+      searchValue: '',
+      cardVision: false,
+    },
+    mounted() {
+      service(GET_GOODS_ITEMS_URL).then((data) => {
+        this.items = data;
+      });
+    },
+    computed: {
+      getTotalPrice() {
+        return this.items.reduce((prev, { price }) => {
+          return prev + price;
+        }, 0)
+      },
+      filteredItems() {
+        return this.items.filter(({ product_name }) => {
+          return (new RegExp(this.searchValue, 'gui')).test(product_name);
+        })
+      },
+    },
+    methods: {
+      visibleItem() {
+        const openEl = document.querySelector('.cart-button');
+        const hiddenEl = document.querySelector('.hidden');
+        const closeEl = document.querySelector('.basket_headerBlock__mainClose');
+        openEl.addEventListener('click', () => {
+          hiddenEl.classList.toggle('basket_hidden');
+        });
 
+        closeEl.addEventListener('click', () => {
+          hiddenEl.classList.add('basket_hidden');
+        });
+      },
+    },
 
+  })
 
-const input = document.querySelector('.search_text');
-document.querySelector('.search_button').addEventListener('click', () => {
-  goodsList.filterItems(input.value);
-  goodsList.render();
-});
-
-input.addEventListener('keydown', () => {
-  goodsList.filterItems(input.value);
-  goodsList.render();
-});
+  const goodsItem = Vue.component('goods-item', {
+    props: ['item'],
+    template: `
+    <div class="goods-item">
+               <h3>{{item.product_name}}</h3>
+               <div class="goods-itemImg"></div>
+               <p>{{item.price}}</p>
+            </div>
+    `
+  })
+}
