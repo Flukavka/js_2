@@ -16,51 +16,15 @@
       <header>
          <div class="header_nav container">
             <div class="search">
-               <button class="search_button">Поиск</button>
-               <input type="text" class="search_text" placeholder="Наименование продукта" v-model="searchValue">
+               <searh v-model="searchValue"></searh>
             </div>
-            <button class="cart-button" type="button" v-on:click="visibleItem">Корзина</button>
-            <div class="basket">
-               <div class="hidden basket_hidden">
-                  <div class="basket_headerBlock">
-                     <div class="basket_headerBlock__main">
-                        <div class="basket_headerBlock__mainHeadding">Корзина</div>
-                        <div class="basket_headerBlock__mainClose"><img src="img/closePurple.svg" alt="close"></div>
-                     </div>
-                     <div class="basket_headerBlock__goods">
-                        <div class="basket_headerBlock__goodsName">Наименование товара</div>
-                        <div class="basket_headerBlock__goodsPrice">Стоимость</div>
-                        <div class="basket_headerBlock__goodsCount">Количество</div>
-                     </div>
-                  </div>
-                  <div class="basket_userBlock">
-                     <!-- <div class="basket_userBlock__productName">Default</div>
-                  <div class="basket_userBlock__productPrice">
-                     <span class="basket_userBlock__productPriceValue">0</span>
-                     <span class="basket_userBlock__productPriceValute">₽</span>
-                  </div>
-                  <div class="basket_userBlock__productCount">
-                     <input class="basket_userBlock__productCountValue" placeholder="1" type="number">
-                     <span class="basket_userBlock__productCountDesignation">шт</span>
-                  </div>
-                  <button class="basket_userBlock__deleteBtn">Удалить</button> -->
-                     <div class="basket_userBlock__emptyBasket">Список товаров пуст</div>
-                  </div>
-                  <div class="basket_totalBlock">
-                     <div class="basket_totalBlock__headding">Итого</div>
-                     <div class="basket_totalBlock__price">
-                        <span class="basket_totalBlock__priceValue">0</span>
-                        <span class="basket_totalBlock__priceValute">₽</span>
-                     </div>
-                  </div>
-                  <button class="basket_orderBtn">Заказать</button>
-               </div>
-            </div>
+            <button class="cart-button" type="button" @click="visibleItem">Корзина</button>
+            <basket></basket>
          </div>
       </header>
       <main class="container">
          <div class="goods-list">
-            <goods-item v-for="item in filteredItems" v-bind:item="item">Список товаров пуст</goods-item>
+            <goods-item v-for="item in filteredItems" :item="item">Список товаров пуст</goods-item>
          </div>
       </main>
    </div>
