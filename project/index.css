@@ -192,7 +192,7 @@ header .basket_userBlock__productCount {
 }
 
 header .basket_userBlock__productCount > input {
-  width: 12px;
+  width: 16px;
 }
 
 header .basket_userBlock__deleteBtn {
@@ -247,9 +247,6 @@ header .basket_orderBtn {
   }
 }
 
-/* .plug {
-    background: none;
-} */
 .goods-item {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -274,5 +271,15 @@ header .basket_orderBtn {
   height: 120px;
   width: 80%;
   background-color: rebeccapurple;
+}
+
+.goods-itemBtn {
+  margin-bottom: 24px;
+  padding: 6px 12px;
+  border: none;
+  font-family: inherit;
+  background: none;
+  -webkit-box-shadow: 0px 1px 4px rgba(26, 27, 24, 0.1);
+          box-shadow: 0px 1px 4px rgba(26, 27, 24, 0.1);
 }
 /*# sourceMappingURL=index.css.map */
