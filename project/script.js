@@ -24,7 +24,7 @@ window.onload = () => {
     data: {
       items: [],
       searchValue: '',
-      cardVision: false,
+      /* cardVision: false, */
     },
     mounted() {
       service(GET_GOODS_ITEMS_URL).then((data) => {
