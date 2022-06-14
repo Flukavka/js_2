@@ -8,15 +8,6 @@ async function service(url) {
   return fetch(url).then((res) => res.json());
 }
 
-/* class BasketGoods {
-  items = [];
-  fetchData() {
-    return service(GET_BASKET_URL, (data) => {
-      this.items = data;
-    });
-  }
-} */
-
 
 window.onload = () => {
   const root = new Vue({
