@@ -1,8 +1,8 @@
 'use strict'
 
-const BASA_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
-const GET_GOODS_ITEMS_URL = `${BASA_URL}/catalogData.json`;
-const GET_BASKET_URL = `${BASA_URL}/getBasket.json`;
+const BASA_URL = 'http://localhost:8000/';
+const GET_GOODS_ITEMS_URL = `${BASA_URL}/goods.json`;
+const GET_BASKET_URL = `${BASA_URL}/basket_goods.json`;
 
 async function service(url) {
   return fetch(url).then((res) => res.json());
@@ -57,6 +57,7 @@ const goodsItem = Vue.component('goods-item', {
              <h3>{{item.product_name}}</h3>
              <div class="goods-itemImg"></div>
              <p>{{item.price}}</p>
+             <button class="goods-itemBtn">В корзину</button>
           </div>
   `
 });
@@ -81,11 +82,6 @@ const goodsBasket = Vue.component('basket', {
       basketGoodsItem: []
     }
   },
-  mounted() {
-    service(GET_BASKET_URL).then((data) => {
-      this.items = data;
-    });
-  },
   template: `
   <div class="basket">
                <div class="hidden basket_hidden">
@@ -101,27 +97,31 @@ const goodsBasket = Vue.component('basket', {
                      </div>
                   </div>
                   <div class="basket_userBlock">
-                     <!-- <div class="basket_userBlock__productName">Default</div>
+                     <div class="basket_userBlock__productName">Default</div>
                   <div class="basket_userBlock__productPrice">
                      <span class="basket_userBlock__productPriceValue">0</span>
                      <span class="basket_userBlock__productPriceValute">₽</span>
                   </div>
                   <div class="basket_userBlock__productCount">
-                     <input class="basket_userBlock__productCountValue" placeholder="1" type="number">
+                     <input class="basket_userBlock__productCountValue" placeholder="1" type="tel">
                      <span class="basket_userBlock__productCountDesignation">шт</span>
                   </div>
-                  <button class="basket_userBlock__deleteBtn">Удалить</button> -->
-                     <div class="basket_userBlock__emptyBasket">Список товаров пуст</div>
+                  <button class="basket_userBlock__deleteBtn">Удалить</button>
                   </div>
                   <div class="basket_totalBlock">
                      <div class="basket_totalBlock__headding">Итого</div>
                      <div class="basket_totalBlock__price">
-                        <span class="basket_totalBlock__priceValue">0</span>
+                        <span class="basket_totalBlock__priceValue">{{getTotalPrice}}</span>
                         <span class="basket_totalBlock__priceValute">₽</span>
                      </div>
                   </div>
                   <button class="basket_orderBtn">Заказать</button>
                </div>
             </div>
-  `
+  `,
+  mounted() {
+    service(GET_BASKET_URL).then((data) => {
+      this.basketGoodsItem = data;
+    });
+  },
 })
