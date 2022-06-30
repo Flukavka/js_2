@@ -1,8 +1,8 @@
 'use strict'
 
-const BASA_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
-const GET_GOODS_ITEMS_URL = `${BASA_URL}/catalogData.json`;
-const GET_BASKET_URL = `${BASA_URL}/getBasket.json`;
+const BASA_URL = 'http://localhost:8000/';
+const GET_GOODS_ITEMS_URL = `${BASA_URL}/goods.json`;
+const GET_BASKET_URL = `${BASA_URL}/basket_goods.json`;
 
 async function service(url) {
   return fetch(url).then((res) => res.json());
@@ -82,11 +82,6 @@ const goodsBasket = Vue.component('basket', {
       basketGoodsItem: []
     }
   },
-  mounted() {
-    service(GET_BASKET_URL).then((data) => {
-      this.items = data;
-    });
-  },
   template: `
   <div class="basket">
                <div class="hidden basket_hidden">
@@ -123,5 +118,10 @@ const goodsBasket = Vue.component('basket', {
                   <button class="basket_orderBtn">Заказать</button>
                </div>
             </div>
-  `
+  `,
+  mounted() {
+    service(GET_BASKET_URL).then((data) => {
+      this.basketGoodsItem = data;
+    });
+  },
 })
