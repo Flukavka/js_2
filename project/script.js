@@ -116,7 +116,7 @@ const goodsBasket = Vue.component('basket', {
                   <div class="basket_totalBlock">
                      <div class="basket_totalBlock__headding">Итого</div>
                      <div class="basket_totalBlock__price">
-                        <span class="basket_totalBlock__priceValue">0</span>
+                        <span class="basket_totalBlock__priceValue">{{getTotalPrice}}</span>
                         <span class="basket_totalBlock__priceValute">₽</span>
                      </div>
                   </div>
